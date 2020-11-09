@@ -1,4 +1,4 @@
-import { Module } from '../../../../../core/src';
+import { Module } from '@mildjs/core';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 

@@ -1,5 +1,4 @@
-import { TypeOrmRepositoryToken } from '../tokens';
-import { makeInjectableParamsDecorator, isConstructor, Constructor, GlobalStore } from '../../../core/src';
+import { makeInjectableParamsDecorator, isConstructor, Constructor, GlobalStore } from '@mildjs/core';
 import { Entity, Repository, MongoRepository, TreeRepository } from 'typeorm';
 
 export function InjectRepository(entity: Constructor<any>): Function {
@@ -8,7 +7,7 @@ export function InjectRepository(entity: Constructor<any>): Function {
         console.log(GlobalStore.get('typeorm_connection'));
 
         const value = () => "hey function";
-        return makeInjectableParamsDecorator(TypeOrmRepositoryToken, target, parameterIndex, value);
+        return makeInjectableParamsDecorator('TypeOrmRepositoryToken', target, parameterIndex, value);
     };
 }
 

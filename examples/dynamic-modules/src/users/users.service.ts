@@ -1,4 +1,4 @@
-import { useExpressServer, Controller, Get, Injectable, Module, InjectionToken } from '../../../../../core';
+import { useExpressServer, Controller, Get, Injectable, Module } from '@mildjs/core';
 import { TypeOrmModule, InjectConnection, InjectRepository } from '../../../../src';
 import { UserEntity } from './users.entity';
 import { Repository } from 'typeorm';

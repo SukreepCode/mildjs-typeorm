@@ -1,4 +1,4 @@
-import { Controller, Get, Injector, Module, useExpressServer } from '@mildjs/core';
+import { Controller, Get, Module, useExpressServer } from '@mildjs/core';
 import express, { Response } from "express";
 import request from 'supertest';
 import { Connection } from 'typeorm';
@@ -14,7 +14,14 @@ class MockController {
 
     @Get()
     index(req: any, res: Response) {
-        res.status(200).send('OK');
+        if(this.isConnection()){
+            res.status(200).send('connected');
+        }
+        res.status(400).send('ERROR');
+    }
+
+    async isConnection(){
+        return await this.connection instanceof Connection
     }
 }
 
@@ -43,7 +50,7 @@ describe('Run controller only mode : GET (e2e)', () => {
         request(app)
             .get('/')
             .expect(200)
-            .expect('OK')
+            .expect('connected')
     });
 
 });

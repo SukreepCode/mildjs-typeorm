@@ -1,5 +1,5 @@
 import { Connection, Repository } from 'typeorm';
-import { Controller, Get, Inject } from '../../../../../core/src';
+import { Controller, Get, Inject } from '@mildjs/core';
 import { InjectConnection, InjectRepository } from '../../../../src';
 import { UserEntity } from './users.entity';
 import { UsersService } from './users.service';
@@ -8,13 +8,13 @@ import { UsersService } from './users.service';
 export class UsersController {
 
   constructor(
-    private usersService: UsersService,
+    // private usersService: UsersService,
  
     @InjectConnection()
     private connection: Connection,
 
-    @InjectRepository(UserEntity)
-    private repository: any
+    // @InjectRepository(UserEntity)
+    // private repository: any
   ) {
     // this.testConnection();
    }
@@ -23,7 +23,7 @@ export class UsersController {
     if(await this.connection instanceof Connection)
       console.log('Database connected');
 
-    console.log(this.repository);
+    // console.log(this.repository);
 
     // const u = new UserEntity();
     // u.name = "test";
@@ -33,11 +33,11 @@ export class UsersController {
     // console.log(getUser);
   }
 
-  @Get()
-  public async getUsers(req: any, res: any, next: any) {
-    const data = this.usersService.find();
-    res.status(200).json(data);
-  }
+  // @Get()
+  // public async getUsers(req: any, res: any, next: any) {
+  //   const data = this.usersService.find();
+  //   res.status(200).json(data);
+  // }
 
   @Get('test')
   public async test(req: any, res: any, next: any) {
