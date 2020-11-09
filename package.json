@@ -41,7 +41,7 @@
     "dev:watch": "npm run build && chokidar \"src/**/*.ts\" -c \"npm run build\"",
     "dev:install": "npm install -D @mildjs/core@file:../mildjs/packages/core",
     "dev:uninstall": "npm install -D @mildjs/core@next",
-    "pre-commit": "run-s test dev:uninstall"
+    "pre-commit": "run-s dev:uninstall"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -52,7 +52,7 @@
     "class-validator": "^0.12.2"
   },
   "devDependencies": {
-    "@mildjs/core": "file:../mildjs/packages/core",
+    "@mildjs/core": "^2.0.0-alpha.4",
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.6",
