@@ -2,7 +2,7 @@
   "name": "@mildjs/typeorm",
   "version": "0.0.1",
   "author": "Thada Wangthammang",
-  "description": "typeorm package for @mildjs/core",
+  "description": "TypeORM module (extension) for @mildjs/core",
   "directories": {
     "example": "example",
     "test": "test"
@@ -37,11 +37,10 @@
     "doc:watch": "chokidar \"src/**/*.ts\" -c  \"typedoc\"",
     "doc:serve": "live-server _docs",
     "doc:dev": "run-p doc:build && run-p doc:watch doc:serve",
-    "dev": "run-s dev:install dev:watch",
+    "dev": "run-s dev:prepare dev:watch",
     "dev:watch": "npm run build && chokidar \"src/**/*.ts\" -c \"npm run build\"",
-    "dev:install": "npm install -D @mildjs/core@file:../mildjs/packages/core",
-    "dev:uninstall": "npm install -D @mildjs/core@next",
-    "pre-commit": "run-s dev:uninstall"
+    "dev:prepare": "npm install -D @mildjs/core@file:../mildjs/packages/core",
+    "dev:revert": "npm install -D @mildjs/core@next"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -83,7 +82,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pre-commit"
+      "pre-commit": "npm run dev:revert"
     }
   }
 }
