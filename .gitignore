@@ -1,6 +1,8 @@
 # local doc
 _docs
 
+*.sqlite
+
 # Logs
 logs
 *.log

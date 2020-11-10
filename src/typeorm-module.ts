@@ -1,36 +1,64 @@
 import "reflect-metadata";
-import { ConnectionOptions, Connection, createConnection, Entity } from 'typeorm';
-import { Provider, DynamicModule, Module, GlobalStore} from '@mildjs/core';
-// export const TypeOrmConnectionToken = new InjectionToken<Connection>('typeorm_connection');
+import {
+  ConnectionOptions,
+  Connection,
+  createConnection,
+  Entity,
+} from "typeorm";
+import {
+  Provider,
+  DynamicModule,
+  Module,
+  GlobalStore,
+  isConstructor,
+  getClassName,
+} from "@mildjs/core";
+import { TypeOrmConnectionToken, getTypeOrmRepositoryToken } from "./tokens";
 
 @Module({})
 export class TypeOrmModule {
-
   static forRoot(config: ConnectionOptions): DynamicModule {
-
     const connection = createConnection(config);
-
-    const typeOrmConnection = {
-      provide: "TypeOrmConnectionToken",
-      useValue: connection,
-    };
-
-    const TypeOrmRepository = {
-      provide: "TypeOrmRepositoryToken",
-      useValue: 'do not use value'
-    }
-
-    TypeOrmModule.setConnection(connection);
-
+    const repositoryProviders: Provider[] = getRepositoryProviders(
+      connection,
+      config.entities
+    );
     return {
       module: TypeOrmModule,
-      providers: [typeOrmConnection, TypeOrmRepository]
+      providers: [getConnectionProvider(connection), ...repositoryProviders],
+    };
+  }
+}
+
+function getConnectionProvider(connection: any) {
+  return {
+    provide: TypeOrmConnectionToken,
+    useAsyncFactory: connection,
+  };
+}
+
+function getRepositoryProviders(connection: any, entities: any[] = []) {
+  // Auto load entity
+  const entitiesClass: any[] = [];
+
+  entities.forEach((entity: any) => {
+    if (isConstructor(entity)) {
+      entitiesClass.push(entity);
     }
-  }
+  });
 
-  static setConnection(connection: any){
-    GlobalStore.set('typeorm_connection', connection);
-    console.log(GlobalStore.get('typeorm_connection'));
-  }
+  const getRepository = async (entity: any) => {
+    return await (await connection).getRepository(entity);
+  };
 
+  const exportProviders: Provider[] = [];
+
+  entitiesClass.forEach((entity: any) => {
+    exportProviders.push({
+      provide: getTypeOrmRepositoryToken(entity),
+      useAsyncFactory: getRepository(entity),
+    });
+  });
+
+  return exportProviders;
 }

@@ -8,42 +8,23 @@ import { UsersService } from './users.service';
 export class UsersController {
 
   constructor(
-    // private usersService: UsersService,
- 
+
     @InjectConnection()
     private connection: Connection,
 
-    // @InjectRepository(UserEntity)
-    // private repository: any
+    @InjectRepository(UserEntity)
+    private repository: Repository<UserEntity>
+    
   ) {
-    // this.testConnection();
-   }
-
-  async testConnection() {
-    if(await this.connection instanceof Connection)
-      console.log('Database connected');
-
-    // console.log(this.repository);
-
-    // const u = new UserEntity();
-    // u.name = "test";
-    // const  repo:Repository<UserEntity> = await this.repository(UserEntity);
-    // // await repo.save(u);
-    // const getUser = await repo.find({ id: 1})
-    // console.log(getUser);
+    this.testConnection();
   }
 
-  // @Get()
-  // public async getUsers(req: any, res: any, next: any) {
-  //   const data = this.usersService.find();
-  //   res.status(200).json(data);
-  // }
-
-  @Get('test')
-  public async test(req: any, res: any, next: any) {
-    this.testConnection();
-    res.json({ message: 'success'});
-    // res.status(200).json(data);
+  async testConnection() {
+    if(this.connection instanceof Connection){
+      console.log('Database connected')
+    }
+    const getUser = await this.repository.find({ id: 1})
+    console.log(getUser);
   }
 
 }

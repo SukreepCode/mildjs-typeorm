@@ -1,6 +1,6 @@
 {
   "name": "@mildjs/typeorm",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Thada Wangthammang",
   "description": "TypeORM module (extension) for @mildjs/core",
   "directories": {
@@ -29,7 +29,8 @@
     "test": "jest --config jestconfig.json --no-cache --forceExit",
     "test:coverage": "jest --config jestconfig.json --no-cache ---forceExit --coverage",
     "test:watch": "jest --config jestconfig.json --watch --forceExit",
-    "prepublishOnly": "run-s format lint test build",
+    "check": "run-s format lint",
+    "prepublishOnly": "run-s test build",
     "publish:patch": "npm version patch --force && npm publish",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "example": "chokidar \"**/*.ts\" -c  \" ts-node example/tester/index.ts\"",
@@ -51,7 +52,7 @@
     "class-validator": "^0.12.2"
   },
   "devDependencies": {
-    "@mildjs/core": "^2.0.0-alpha.4",
+    "@mildjs/core": "^2.0.0-alpha.5",
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.6",
