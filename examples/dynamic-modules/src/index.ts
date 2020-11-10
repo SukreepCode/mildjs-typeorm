@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import express, { Response } from 'express';
-import { useExpressServer, Controller, Get, Injectable, Module } from '@mildjs/core';
-import { TypeOrmModule, InjectConnection } from '../../../src';
-import { UsersModule } from './users/users.module';
+import express from 'express';
+import { useExpressServer } from '@mildjs/core';
+import { TypeOrmModule } from '../../../src';
 import { UsersController } from './users/users.controller';
 import { UserEntity } from './users/users.entity';
 
